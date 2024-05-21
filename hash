@@ -1,0 +1,31 @@
+// !!!!!! ORIGINAL AND REFACTORED HASH FUNCTIONS. The second one as an error. !!!!! //////
+
+// SOURCE: debugcode.ai
+	private int naiveHashCode(String key) {
+		 int hash = 0;
+		 String keyString = key.toString();
+		 
+		 for (int i = 0; i < keyString.length(); i++) {
+			 hash += keyString.charAt(i);
+		 }
+		 return hash % TABLE_SIZE;
+	}
+
+	Function<String, Integer> naiveHashCode = key -> key.chars().sum() % TABLE_SIZE;
+	
+	// SOURCE: debugcode.ai
+	private int moreComplicatedHashCode(String key) {
+		int hash = 0;
+		String keyString = key.toString();
+		
+		for (int i =0; i < keyString.length(); i++) {
+			hash = (hash << 5) + keyString.charAt(i);
+		}
+		
+		return Math.abs(hash) % TABLE_SIZE;
+	}
+	
+	Function<String, Integer> lambdaHashCode = key -> key.chars()
+		    .reduce(0, (hash, c) -> (hash << 5) - hash + c)
+		    .abs() % TABLE_SIZE;
+}
